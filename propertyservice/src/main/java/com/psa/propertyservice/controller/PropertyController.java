@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.psa.propertyservice.dto.APIResponse;
 import com.psa.propertyservice.dto.PropertyDto;
+import com.psa.propertyservice.entity.Property;
 import com.psa.propertyservice.entity.RoomAvailability;
 import com.psa.propertyservice.entity.Rooms;
 import com.psa.propertyservice.service.PropertyService;
@@ -24,8 +25,7 @@ import java.util.List;
 public class PropertyController {
 
     @Autowired
-    private PropertyService propertyService;
-
+    private PropertyService propertyService ;
 
     //private static final org.slf4j.Logger logger = LoggerFactory.getLogger(PropertyController.class);
 
@@ -35,7 +35,7 @@ public class PropertyController {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     public ResponseEntity<APIResponse> addProperty(
-            @RequestParam("property") String propertyJson,  // Use RequestParam to get the property as a raw JSON string
+            @RequestParam("property") String propertyJson,                  // Use RequestParam to get the property as a raw JSON string
             @RequestParam("files") MultipartFile[] files) {  // Use RequestParam to handle files
 
         // Log the multipart parts
@@ -53,10 +53,10 @@ public class PropertyController {
         }
 
         // Process the property and files
-        PropertyDto property = propertyService.addProperty(dto, files);
+        Property property = propertyService.addProperty(dto, files);
 
         // Create response object
-        APIResponse<PropertyDto> response = new APIResponse<>();
+        APIResponse<Property> response = new APIResponse<>();
         response.setMessage("Property added");
         response.setStatus(201);
         response.setData(property);

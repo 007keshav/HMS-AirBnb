@@ -25,7 +25,8 @@ public class Property {
 
     @Column(name="number_of_bathrooms")
     private int numberOfBathrooms;
-
+    @Column(name="number_of_guests_allowed")
+    private int numberOfGuestAllowed;
     @ManyToOne
     @JoinColumn(name = "city_id")
     private City city;
@@ -38,15 +39,37 @@ public class Property {
     @JoinColumn(name = "state_id")
     private State state;
 
+    @ManyToOne
+    @JoinColumn(name="pincode_id")
+    private PinCode pinCode;
+
     @OneToMany(mappedBy = "property", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<Rooms> rooms = new ArrayList<>();
 
 
+    public int getNumberOfGuestAllowed() {
+        return numberOfGuestAllowed;
+    }
 
-
+    public void setNumberOfGuestAllowed(int numberOfGuestAllowed) {
+        this.numberOfGuestAllowed = numberOfGuestAllowed;
+    }
 
     public Property() {
+    }
+
+    public Property(long id, String name, int numberOfBeds, int numberOfRooms, int numberOfBathrooms, City city, Area area, State state, PinCode pinCode, List<Rooms> rooms) {
+        this.id = id;
+        this.name = name;
+        this.numberOfBeds = numberOfBeds;
+        this.numberOfRooms = numberOfRooms;
+        this.numberOfBathrooms = numberOfBathrooms;
+        this.city = city;
+        this.area = area;
+        this.state = state;
+        this.pinCode = pinCode;
+        this.rooms = rooms;
     }
 
     public Property(long id, String name, int numberOfBeds, int numberOfRooms, int numberOfBathrooms, City city, Area area, State state, List<Rooms> rooms) {
@@ -59,6 +82,14 @@ public class Property {
         this.area = area;
         this.state = state;
         this.rooms = rooms;
+    }
+
+    public PinCode getPinCode() {
+        return pinCode;
+    }
+
+    public void setPinCode(PinCode pinCode) {
+        this.pinCode = pinCode;
     }
 
     public Property(String name, int numberOfBeds, int numberOfRooms, int numberOfBathrooms, City city, Area area, State state, List<Rooms> rooms) {
@@ -143,4 +174,5 @@ public class Property {
     public void setRooms(List<Rooms> rooms) {
         this.rooms = rooms;
     }
+
 }
