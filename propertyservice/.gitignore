@@ -33,3 +33,5 @@ build/
 .vscode/
 # Ignore Spring Boot config file
 src/main/resources/application.properties
+
+echo "propertyservice/src/main/resources/application.properties" >> .gitignore
