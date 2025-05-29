@@ -19,6 +19,8 @@ public class PropertyDto {
 
     private String area;
 
+    private int pinCode;
+
     private String state;
 
     private List<RoomsDto> rooms;
@@ -47,6 +49,13 @@ public class PropertyDto {
     public int getNumberOfGuestAllowed() {
         return numberOfGuestAllowed;
     }
+    public int getPinCode() {
+        return pinCode;
+    }
+    public void setPinCode(int pinCode) {
+        this.pinCode = pinCode;
+    }
+
     public String getCity() {
         return city;
     }
@@ -65,6 +74,25 @@ public class PropertyDto {
     public void setName(String name) {
         this.name = name;
     }
+
+    public PropertyDto(long id, String name, int numberOfBeds, int numberOfRooms, int numberOfBathrooms, int numberOfGuestAllowed, String city, String area, int pinCode, String state, List<RoomsDto> rooms, List<String> imageUrls) {
+        this.id = id;
+        this.name = name;
+        this.numberOfBeds = numberOfBeds;
+        this.numberOfRooms = numberOfRooms;
+        this.numberOfBathrooms = numberOfBathrooms;
+        this.numberOfGuestAllowed = numberOfGuestAllowed;
+        this.city = city;
+        this.area = area;
+        this.pinCode = pinCode;
+        this.state = state;
+        this.rooms = rooms;
+        this.imageUrls = imageUrls;
+    }
+
+    public PropertyDto() {
+    }
+
     public void setNumberOfBeds(int numberOfBeds) {
         this.numberOfBeds = numberOfBeds;
     }

@@ -24,7 +24,7 @@ public class S3Service {
     public List<String> uploadFiles(MultipartFile[] files) {
         List<String> urls = new ArrayList<>();
         for (MultipartFile file : files) {
-            String fileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
+            String fileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();//generate random file name
             try {
                 ObjectMetadata metadata = new ObjectMetadata();
                 metadata.setContentLength(file.getSize());

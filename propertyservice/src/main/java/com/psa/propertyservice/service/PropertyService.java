@@ -31,6 +31,14 @@ public class PropertyService {
     private RoomRepository roomRepository;
 //    @Autowired
 //    private EmailProducer emailProducer;
+
+    @Autowired
+    private PincodeRepository pinCodeRepository;
+
+    @Autowired
+    private PropertyPhotosRepository photosRepository;
+
+
     @Autowired
     private RoomAvailabilityRepository availabilityRepository;
 
@@ -42,20 +50,22 @@ public class PropertyService {
         this.propertyController = propertyController;
     }
 
-    public PropertyDto addProperty(PropertyDto dto, MultipartFile[] files) {
+    public Property addProperty(PropertyDto dto, MultipartFile[] files) {
         Area area = areaRepository.findByName(dto.getArea());
         City city = cityRepository.findByName(dto.getCity());
         State state = stateRepository.findByName(dto.getState());
+        PinCode pincode = pinCodeRepository.findByPinCode(dto.getPinCode());
 
         Property property = new Property();
         property.setName(dto.getName());
         property.setNumberOfBathrooms(dto.getNumberOfBathrooms());
         property.setNumberOfBeds(dto.getNumberOfBeds());
         property.setNumberOfRooms(dto.getNumberOfRooms());
-        //property.setNumberOfGuestAllowed(dto.getNumberOfGuestAllowed());
+        property.setNumberOfGuestAllowed(dto.getNumberOfGuestAllowed());
         property.setArea(area);
         property.setCity(city);
         property.setState(state);
+        property.setPinCode(pincode);
 
         Property savedProperty = propertyRepository.save(property);
 
@@ -71,7 +81,14 @@ public class PropertyService {
         // Upload files to S3
         List<String> fileUrls = s3Service.uploadFiles(files);
 
-        // Optionally store file URLs in database or DTO
+        for(String url: fileUrls){
+            PropertyPhotos photo = new PropertyPhotos();
+            photo.setUrl(url);
+            photo.setProperty(savedProperty);
+            photosRepository.save(photo);
+        }
+
+        // Optionally store file URLs in a database or DTO
         dto.setImageUrls(fileUrls); // Ensure PropertyDto has `List<String> imageUrls;`
 
 //        emailProducer.sendEmail(new EmailRequest(
@@ -80,7 +97,7 @@ public class PropertyService {
 //                "Your property has been successfully added."
 //        ));
 
-        return dto;
+        return savedProperty;
     }
 
 //    public APIResponse searchProperty(String city, LocalDate date) {
