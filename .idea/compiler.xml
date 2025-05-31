@@ -7,11 +7,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="API-Gate" />
+        <module name="authservice" />
         <module name="microservice-2" />
         <module name="Microservice1" />
-        <module name="authservice" />
         <module name="propertyservice" />
         <module name="service-registry" />
+        <module name="notificationservice" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -25,6 +26,7 @@
       <module name="authservice" options="-parameters" />
       <module name="microservice-2" options="-parameters" />
       <module name="micrpservice-2" options="-parameters" />
+      <module name="notificationservice" options="-parameters" />
       <module name="propertyservice" options="-parameters" />
       <module name="service-registry" options="-parameters" />
     </option>
