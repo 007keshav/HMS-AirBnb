@@ -2,6 +2,7 @@ package com.psa.propertyservice.service;
 
 import com.psa.propertyservice.controller.PropertyController;
 import com.psa.propertyservice.dto.APIResponse;
+import com.psa.propertyservice.dto.EmailRequest;
 import com.psa.propertyservice.dto.PropertyDto;
 import com.psa.propertyservice.dto.RoomsDto;
 import com.psa.propertyservice.entity.*;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -29,8 +31,8 @@ public class PropertyService {
     private StateRepository stateRepository;
     @Autowired
     private RoomRepository roomRepository;
-//    @Autowired
-//    private EmailProducer emailProducer;
+    @Autowired
+    private EmailProducer emailProducer;
 
     @Autowired
     private PincodeRepository pinCodeRepository;
@@ -91,25 +93,25 @@ public class PropertyService {
         // Optionally store file URLs in a database or DTO
         dto.setImageUrls(fileUrls); // Ensure PropertyDto has `List<String> imageUrls;`
 
-//        emailProducer.sendEmail(new EmailRequest(
-//                "pankaj.p.mutha14@gmail.com",
-//                "Property added!",
-//                "Your property has been successfully added."
-//        ));
+        emailProducer.sendEmail(new EmailRequest(
+                "keshavkrishn1006@gmail.com",
+                "Property added!",
+                "Your property has been successfully added."
+        ));
 
         return savedProperty;
     }
 
-//    public APIResponse searchProperty(String city, LocalDate date) {
-//        List<Property> properties = propertyRepository.searchProperty(city,date);
-//        APIResponse<List<Property>> response = new APIResponse<>();
-//
-//        response.setMessage("Search result");
-//        response.setStatus(200);
-//        response.setData(properties);
-//
-//        return response;
-//    }
+    public APIResponse searchProperty(String city, LocalDate date) {
+        List<Property> properties = propertyRepository.searchProperty(city,date);
+        APIResponse<List<Property>> response = new APIResponse<>();
+
+        response.setMessage("Search result");
+        response.setStatus(200);
+        response.setData(properties);
+
+        return response;
+    }
 
 //    public APIResponse<PropertyDto> findPropertyById(long id){
 //        APIResponse<PropertyDto> response = new APIResponse<>();
