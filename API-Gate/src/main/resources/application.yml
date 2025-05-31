@@ -28,3 +28,10 @@ spring:
             - Path=/propertyservice/**
           filters:
             - RewritePath=/propertyservice/(?<segment>.*), /${segment}
+
+        - id: notificationservice
+          uri: lb://notificationservice
+          predicates:
+            - Path=/notification/**
+          filters:
+            - StripPrefix=1
