@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="API-Gate" />
+        <module name="bookingservice" />
         <module name="authservice" />
         <module name="microservice-2" />
         <module name="Microservice1" />
@@ -24,6 +25,7 @@
       <module name="API-Gate" options="-parameters" />
       <module name="Microservice1" options="-parameters" />
       <module name="authservice" options="-parameters" />
+      <module name="bookingservice" options="-parameters" />
       <module name="microservice-2" options="-parameters" />
       <module name="micrpservice-2" options="-parameters" />
       <module name="notificationservice" options="-parameters" />
