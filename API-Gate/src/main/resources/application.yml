@@ -35,3 +35,10 @@ spring:
             - Path=/notification/**
           filters:
             - StripPrefix=1
+
+        - id: booking-service
+          uri: lb://BOOKINGSERVICE
+          predicates:
+            - Path=/booking/**
+          filters:
+            - RewritePath=/booking/(?<segment>.*), /${segment}
