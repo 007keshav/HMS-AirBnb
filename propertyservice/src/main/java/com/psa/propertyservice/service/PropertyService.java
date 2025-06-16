@@ -102,8 +102,8 @@ public class PropertyService {
         return savedProperty;
     }
 
-    public APIResponse searchProperty(String city, LocalDate date) {
-        List<Property> properties = propertyRepository.searchProperty(city,date);
+    public APIResponse searchProperty(String name, LocalDate date) {
+        List<Property> properties = propertyRepository.searchProperty(name,date);
         APIResponse<List<Property>> response = new APIResponse<>();
 
         response.setMessage("Search result");
@@ -113,41 +113,53 @@ public class PropertyService {
         return response;
     }
 
-//    public APIResponse<PropertyDto> findPropertyById(long id){
-//        APIResponse<PropertyDto> response = new APIResponse<>();
-//        PropertyDto dto  = new PropertyDto();
-//        Optional<Property> opProp = propertyRepository.findById(id);
-//        if(opProp.isPresent()) {
-//            Property property = opProp.get();
-//            dto.setArea(property.getArea().getName());
-//            dto.setCity(property.getCity().getName());
-//            dto.setState(property.getState().getName());
-//            List<Rooms> rooms = property.getRooms();
-//            List<RoomsDto> roomsDto = new ArrayList<>();
-//            for(Rooms room:rooms) {
-//                RoomsDto roomDto = new RoomsDto();
-//                BeanUtils.copyProperties(room, roomDto);
-//                roomsDto.add(roomDto);
-//            }
-//            dto.setRooms(roomsDto);
-//            BeanUtils.copyProperties(property, dto);
-//            response.setMessage("Matching Record");
-//            response.setStatus(200);
-//            response.setData(dto);
-//            return response;
-//        }
-//
-//        return null;
-//    }
-//
-//    public List<RoomAvailability> getTotalRoomsAvailable(long id) {
-//        return availabilityRepository.findByRoomId(id);
-//
-//    }
+    public APIResponse<PropertyDto> findPropertyById(long id){
+        APIResponse<PropertyDto> response = new APIResponse<>();
+        PropertyDto dto  = new PropertyDto();
+        Optional<Property> opProp = propertyRepository.findById(id);
+        if(opProp.isPresent()) {
+            Property property = opProp.get();
+            dto.setArea(property.getArea().getName());
+            dto.setCity(property.getCity().getName());
+            dto.setState(property.getState().getName());
+            List<Rooms> rooms = property.getRooms();
+            List<RoomsDto> roomsDto = new ArrayList<>();
+            for(Rooms room:rooms) {
+                RoomsDto roomDto = new RoomsDto();
+                BeanUtils.copyProperties(room, roomDto);
+                roomsDto.add(roomDto);
+            }
+            dto.setRooms(roomsDto);
+            BeanUtils.copyProperties(property, dto);
+            response.setMessage("Matching Record");
+            response.setStatus(200);
+            response.setData(dto);
+            return response;
+        }
 
-//    public Rooms getRoomById(long id) {
-//        return roomRepository.findById(id).get();
-//    }
+        return null;
+    }
 
+    public List<RoomAvailability> getTotalRoomsAvailable(long id) {
+        return availabilityRepository.findByRoomId(id);
+
+    }
+
+    public Rooms getRoomById(long id) {
+        return roomRepository.findById(id).get();
+    }
+
+    public boolean decreaseRoomCount(long roomId, LocalDate date) {
+        RoomAvailability availability = availabilityRepository
+                .findByRoomIdAndAvailableDate(roomId, date);
+
+        if (availability != null && availability.getAvailableCount() > 0) {
+            availability.setAvailableCount(availability.getAvailableCount() - 1);
+            availabilityRepository.save(availability);
+            return true;
+        }
+
+        return false;
+    }
 
 }
