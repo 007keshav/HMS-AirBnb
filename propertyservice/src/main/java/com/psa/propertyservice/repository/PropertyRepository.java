@@ -17,7 +17,8 @@ public interface PropertyRepository extends JpaRepository<Property,Long> {
 		    WHERE (
 		        LOWER(p.city.name) LIKE LOWER(CONCAT('%', :name, '%')) OR
 		        LOWER(p.area.name) LIKE LOWER(CONCAT('%', :name, '%')) OR
-		        LOWER(p.state.name) LIKE LOWER(CONCAT('%', :name, '%'))
+		        LOWER(p.state.name) LIKE LOWER(CONCAT('%', :name, '%')) OR
+		        CAST(p.pinCode.pinCode AS string) LIKE CONCAT('%', :name, '%')
 		    )
 		    AND ra.availableDate = :date
 		""")
